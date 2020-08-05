@@ -38,7 +38,7 @@ const Chatbot = () => {
   }, [updateMessages]);
 
   const handleFirstResponse = async () => {
-    if (cookies.get('user') !== '') {
+    if (cookies.get('user') !== undefined) {
       await delay(1500);
       setAgentTyping(true);
       await delay(1500);
