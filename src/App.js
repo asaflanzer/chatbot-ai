@@ -8,8 +8,8 @@ function App() {
     <div className='App'>
       <br />
       <img src={mayaAvatar} alt='Maya AI' />
-      <h1>Forget everything you know about Chatbots</h1>
-      <p>Meet Maya AI our math problem solver</p>
+      <h1 className='app-title'>Forget everything you know about Chatbots</h1>
+      <p className='typewriter-text'>Meet Maya AI our math problem solver</p>
       <Chatbot />
     </div>
   );

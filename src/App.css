@@ -13,3 +13,35 @@
   color: white;
 }
 
+.app-title {
+  padding: 0 10px;
+}
+.typewriter-text {
+  overflow: hidden;
+  position: relative;
+  margin: 0 auto;
+  width: 320px;
+  border-right: 2px solid rgba(0,0,0,.75);
+  font-size: 16px;
+  white-space: nowrap;
+  animation: typewriter 4s steps(44) 1s 1 normal both, 
+  blinkTextCursor 400ms steps(44) 5.5s 1 normal both;
+}
+
+@keyframes typewriter {
+  from {
+    width: 0;
+  }
+  to { 
+    width: 322px;
+  }
+}
+
+@keyframes blinkTextCursor {
+  from {
+    border-right-color: rgba(0,0,0,.75);
+  }
+  to {
+    border-right-color: transparent;
+  }
+}
