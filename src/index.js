@@ -3,11 +3,20 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+// fonts
+import './fonts/Merriweather-Black.ttf';
+import './fonts/Merriweather-BlackItalic.ttf';
+import './fonts/Merriweather-Bold.ttf';
+import './fonts/Merriweather-BoldItalic.ttf';
+import './fonts/Merriweather-Italic.ttf';
+import './fonts/Merriweather-Light.ttf';
+import './fonts/Merriweather-LightItalic.ttf';
+import './fonts/Merriweather-Regular.ttf';
 
 ReactDOM.render(
-  <React.StrictMode>
+  <>
     <App />
-  </React.StrictMode>,
+  </>,
   document.getElementById('root')
 );
 

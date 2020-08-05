@@ -1,24 +1,16 @@
 import React from 'react';
-import logo from './logo.svg';
+import mayaAvatar from './assets/mayas_avatar.png';
 import './App.css';
+import Chatbot from './components/Chatbot';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      <br />
+      <img src={mayaAvatar} alt='Maya AI' />
+      <h1>Forget everything you know about Chatbots</h1>
+      <p>Meet Maya AI our math problem solver</p>
+      <Chatbot />
     </div>
   );
 }
