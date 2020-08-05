@@ -1,8 +1,10 @@
 # A React Chatbot
 Built with `React Hooks` and `styled-components` , The chatbot will solve any mathematical expression
 
+[Demo]https://maya-ai.netlify.app/
+
 ## Project Structure
-* Created with create-react-app https://reactjs.org/docs/create-a-new-react-app.html
+* Created with [create-react-app]https://reactjs.org/docs/create-a-new-react-app.html
 * The main App.js component is located in `src/App.js`
 * The sub comoponets are located in `src/components`
     1. Chatbot - The main Chatbot component
