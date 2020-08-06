@@ -3,16 +3,18 @@ import React, { useState, useEffect, useRef } from 'react';
 import Launcher from '../Launcher';
 import ChatMessage from '../ChatMessage';
 import ChatTyping from '../ChatTyping';
-// hooks
-import useSteps from '../../hooks/useSteps';
 // Cookies
 import Cookies from 'universal-cookie';
 // delay
 import delay from 'delay';
 // mathjs
 import { create, all } from 'mathjs';
+// lodash
+import _ from 'lodash';
 // styles
 import * as S from './styles';
+
+import stepsConst from './steps';
 
 import ScrollToBottom, { useScrollToBottom } from 'react-scroll-to-bottom';
 
@@ -22,105 +24,145 @@ const cookies = new Cookies();
 const Chatbot = () => {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState('');
-  const {
-    steps,
-    messages,
-    setMessages,
-    current,
-    setCurrent,
-    agentTyping,
-    setAgentTyping,
-    setUserName,
-    setMathExpression,
-  } = useSteps();
-
+  const [botTyping, setBotTyping] = useState(false);
+  const [messages, setMessages] = useState([]);
   const messagesEndRef = useRef(null);
+
   const scrollToBottom = useScrollToBottom();
+
+  let nextMessage;
+
+  useEffect(
+    (nextMessage) => {
+      const lastStep = _.findLast(messages, (step) => {
+        return step;
+      });
+
+      const { responseType, waitForUserInput } = lastStep || {};
+
+      !waitForUserInput &&
+        setDelayedMessage(
+          { ...nextMessage, message: stepsConst[responseType] },
+          true
+        );
+    },
+    [messages]
+  );
 
   useEffect(() => {
     scrollToBottom(messagesEndRef);
-  }, [messages, input, agentTyping, scrollToBottom]);
-
-  const handleFirstResponse = async () => {
-    if (cookies.get('user') !== undefined) {
-      await delay(1500);
-      setAgentTyping(true);
-      await delay(1500);
-      setAgentTyping(false);
-      setMessages((messages) => [
-        ...messages,
-        {
-          agent: `Nice to see you again ${cookies.get(
-            'user'
-          )}. Let's pick this up from where we left off`,
-        },
-      ]);
-      await delay(2000);
-      setAgentTyping(true);
-      await delay(2000);
-      setAgentTyping(false);
-      setMessages((messages) => [
-        ...messages,
-        {
-          agent:
-            "List any mathematical expression you can think of - I'll crunch it in no time",
-        },
-      ]);
-      setUserName(cookies.get('user'));
-      setCurrent(8);
-    } else if (current === 0) {
-      await delay(1500);
-      setAgentTyping(true);
-      await delay(2000);
-      setAgentTyping(false);
-      setMessages((messages) => [...messages, steps[0]]);
-      setCurrent(1);
-      await delay(2000);
-      setAgentTyping(true);
-      await delay(2000);
-      setAgentTyping(false);
-      setMessages((messages) => [...messages, steps[1]]);
-      setCurrent(2);
-    }
-  };
-
-  const handleUserMessage = async (e) => {
-    e.preventDefault();
-    let userMsg = input;
-    setInput('');
-    // Set user message
-    setMessages((messages) => [...messages, { user: userMsg }]);
-    // Wait for username question
-    if (current === 2) {
-      setUserName(userMsg.charAt(0).toUpperCase() + userMsg.slice(1));
-      setCurrent(current + 1);
-      // Wait for math expression question
-    } else if (current === 5) {
-      setMathExpression(userMsg);
-      setCurrent(current + 1);
-    } else if (current > 7) {
-      // Keep calculating the last user userMsg
-      await delay(1500);
-      setAgentTyping(true);
-      await delay(1500);
-      setAgentTyping(false);
-      setMessages((messages) => [
-        ...messages,
-        { agent: math.evaluate(userMsg) },
-      ]);
-      setAgentTyping(true);
-      await delay(1500);
-      setAgentTyping(false);
-      setMessages((messages) => [
-        ...messages,
-        { agent: steps[8].agent[math.round(math.random(0, 2))] },
-      ]);
-      setCurrent(current + 1);
-    }
-  };
+  }, [messages, scrollToBottom]);
 
   const handleInput = (e) => {
     setInput(e.target.value);
+  };
+
+  const handleFirstResponse = () => {
+    // Initial message from bot
+    if (cookies.get('user') === undefined) {
+      const greeting = stepsConst['GREETING_1'];
+      setDelayedMessage({ ...nextMessage, message: greeting }, true);
+    } else {
+      const greet_back = stepsConst['GREET_BACK_1'];
+      setDelayedMessage({ ...nextMessage, message: greet_back }, true);
+    }
+  };
+
+  const handleUserMessage = (e) => {
+    // user response
+    e.preventDefault();
+    let userMsg = input;
+    setInput('');
+    setDelayedMessage(
+      {
+        message: {
+          type: 'USER',
+          text: `${userMsg}`,
+        },
+      },
+      false
+    );
+    // check for bot response
+    handleBotResponse(userMsg);
+  };
+
+  const handleBotResponse = (userMsg) => {
+    // bot response
+    const lastStep = _.findLast(messages, (step) => {
+      console.log('last step before BOT', step);
+      return step;
+    });
+
+    const { responseType } = lastStep || {};
+
+    let username;
+    if (responseType === 'NAME_RESPONSE') {
+      username = userMsg.charAt(0).toUpperCase() + userMsg.slice(1);
+      cookies.set('user', username);
+      setDelayedMessage(
+        {
+          ...nextMessage,
+          message: {
+            type: 'BOT',
+            action: 'NAME_RESPONSE',
+            text: () => `Nice to meet you ${username}!`,
+            responseType: 'GREETING_3',
+            waitForUserInput: false,
+          },
+        },
+        true
+      );
+    } else if (responseType === 'MATH_CALC_1') {
+      setDelayedMessage(
+        {
+          ...nextMessage,
+          message: {
+            type: 'BOT',
+            action: responseType,
+            text: () => `${math.evaluate(userMsg)}`,
+            responseType: 'MATH_RESPONSE_1',
+            waitForUserInput: false,
+          },
+        },
+        true
+      );
+    } else if (responseType === 'MATH_CALC_2') {
+      setDelayedMessage(
+        {
+          ...nextMessage,
+          message: {
+            type: 'BOT',
+            action: responseType,
+            text: () => `${math.evaluate(userMsg)}`,
+            responseType: 'RANDOM_RESPONSE',
+            waitForUserInput: false,
+          },
+        },
+        true
+      );
+    } else {
+      setDelayedMessage(
+        { ...nextMessage, message: stepsConst[responseType] },
+        true
+      );
+    }
+  };
+
+  const setDelayedMessage = async ({ message, delayBot = true }) => {
+    try {
+      const res = await message.type;
+      if (res === 'USER') {
+        setMessages((messages) => [...messages, message]);
+      } else if (await delayBot) {
+        await delay(2000);
+        setBotTyping(true);
+        await delay(2000);
+        setBotTyping(false);
+        setMessages((messages) => [...messages, message]);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const openChat = () => {
@@ -148,10 +190,11 @@ const Chatbot = () => {
           <S.Scrollbar>
             <ScrollToBottom>
               <S.MessageList length={messages.length}>
-                {messages && <ChatMessage messages={messages} />}
-                {(agentTyping || input !== '') && (
-                  <ChatTyping agent={agentTyping} user={input} />
+                {console.log(messages)};
+                {messages && (
+                  <ChatMessage messages={messages} data-testid='chat-message' />
                 )}
+                <ChatTyping isTyping={botTyping} />
               </S.MessageList>
               <div ref={messagesEndRef} />
             </ScrollToBottom>

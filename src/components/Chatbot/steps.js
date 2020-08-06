@@ -1,22 +1,92 @@
-export const steps = [
-  { agent: "Hi, I'm Maya! Today you're going to help me to ace my game" },
-  { agent: "Let's start by telling me your name" },
-  { user: 'username' },
-  { agent: `Nice to meet you username` },
-  {
-    agent:
-      "Alright, this is how it going to work. List any mathematical expression you can think of - I'll crunch it in no time",
-  },
-  { user: 'mathExpression' },
-  { agent: 'math.evaluate(mathExpression)' },
-  { agent: 'This was easy, give me something harder 😃' },
-  {
-    agent: [
-      'Got it! Hit me again',
-      'That one was tough! Got any more?',
-      'Piece of cake, want to try another one?',
-    ],
-  },
-];
+// Cookies
+import Cookies from 'universal-cookie';
 
-export default steps;
+// mathjs
+// import { create, all } from 'mathjs';
+// const math = create(all);
+
+const cookies = new Cookies();
+
+const stepsConst = {
+  GREET_BACK_1: {
+    type: 'BOT',
+    action: 'GREET_BACK_1',
+    text: () =>
+      `Nice to see you again ${cookies.get(
+        'user'
+      )}. Let's pick this up from where we left off`,
+    responseType: 'GREET_BACK_2',
+    waitForUserInput: false,
+  },
+  GREET_BACK_2: {
+    type: 'BOT',
+    action: 'GREET_BACK_2',
+    text: () =>
+      "List any mathematical expression you can think of - I'll crunch it in no time",
+    responseType: 'MATH_CALC_1',
+    waitForUserInput: true,
+  },
+
+  GREETING_1: {
+    type: 'BOT',
+    action: 'GREETING_1',
+    text: () => "Hi, I'm Maya! Today you're going to help me to ace my game",
+    responseType: 'GREETING_2',
+    waitForUserInput: false,
+  },
+  GREETING_2: {
+    type: 'BOT',
+    action: 'GREETING_2',
+    text: () => "Let's start by telling me your name",
+    responseType: 'NAME_RESPONSE',
+    waitForUserInput: true,
+  },
+  NAME_RESPONSE: {
+    type: 'BOT',
+    action: 'NAME_RESPONSE',
+    text: () => 'Nice to meet you USERNAME!',
+    responseType: 'GREETING_3',
+    waitForUserInput: false,
+  },
+  GREETING_3: {
+    type: 'BOT',
+    action: 'GREETING_3',
+    text: () =>
+      "Alright, this is how it going to work. List any mathematical expression you can think of - I'll crunch it in no time",
+    responseType: 'MATH_CALC_1',
+    waitForUserInput: true,
+  },
+  MATH_CALC_1: {
+    type: 'BOT',
+    action: 'MATH_CALC_1',
+    text: () => 'SOLVE MATH EXPRESSION',
+    responseType: 'MATH_RESPONSE_1',
+    waitForUserInput: false,
+  },
+  MATH_RESPONSE_1: {
+    type: 'BOT',
+    action: 'MATH_RESPONSE_1',
+    text: () => 'This was easy, give me something harder 😃',
+    responseType: 'MATH_CALC_2',
+    waitForUserInput: true,
+  },
+  MATH_CALC_2: {
+    type: 'BOT',
+    action: 'MATH_CALC_2',
+    text: () => 'SOLVE MATH EXPRESSION',
+    responseType: 'RANDOM_RESPONSE',
+    waitForUserInput: false,
+  },
+  RANDOM_RESPONSE: {
+    type: 'BOT',
+    action: 'RANDOM_RESPONSE',
+    text: () => 'Piece of cake, want to try another one?',
+    responseType: 'MATH_CALC_2',
+    waitForUserInput: true,
+    // 'Got it! Hit me again',
+    // 'That one was tough! Got any more?',
+    // 'Piece of cake, want to try another one?'
+  },
+};
+
+export default stepsConst;

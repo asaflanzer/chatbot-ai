@@ -17,6 +17,8 @@ Built with `React Hooks` and `styled-components` , The chatbot will solve any ma
     2. `mathjs` for resolving string mathematical expressions
     3. `delay` delay a promise a specified amount of time
     4. `universal-cookie` for saving data in cookies
+    5. `lodash` provides utility functions for common programming tasks
+    6. `animejs` - animations library
 
 
 ## Local Installation & Setup
@@ -27,4 +29,3 @@ All commands run from project root:
 2. `npm start`
 6. Visit http://localhost:3000
 7. Have fun!
-

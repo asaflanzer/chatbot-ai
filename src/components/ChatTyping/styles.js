@@ -1,6 +1,5 @@
 import styled, { keyframes } from 'styled-components';
 import MayaIcon from '../../assets/mayas_avatar.png';
-import UserIcon from '../../assets/user_avatar.png';
 
 export const MessageItem = styled.div`
   margin: 5px;
@@ -18,25 +17,11 @@ export const MessageItem = styled.div`
   -ms-flex-pack: start;
 `;
 
-export const MessageItemUser = styled(MessageItem)`
-  justify-content: flex-end;
-  -webkit-box-pack: end;
-  -webkit-justify-content: flex-end;
-  -ms-flex-pack: end;
-`;
-
 export const Agent = styled.div`
   display: flex;
   order: 0;
   -webkit-order: 0;
   -ms-flex-order: 0;
-`;
-
-export const User = styled.div`
-  display: flex;
-  order: 1;
-  -webkit-order: 1;
-  -ms-flex-order: 1;
 `;
 
 export const Avatar = styled.img`
@@ -53,10 +38,6 @@ export const Avatar = styled.img`
   -ms-transform-origin: bottom right;
 `;
 
-export const AvatarUser = styled(Avatar)`
-  background-image: url(${UserIcon});
-`;
-
 export const Text = styled.div`
   display: inline-block;
   font-size: 12px;
@@ -70,16 +51,6 @@ export const Text = styled.div`
   color: #282c34;
   background-color: #efefef;
   border-radius: 18px 18px 18px 0;
-  transform-origin: bottom left;
-  -webkit-transform-origin: bottom left;
-  -ms-transform-origin: bottom left;
-`;
-
-export const TextUser = styled(Text)`
-  margin-right: 2px;
-  color: #fff;
-  background-color: #3f434b;
-  border-radius: 18px 18px 18px 18px;
   transform-origin: bottom left;
   -webkit-transform-origin: bottom left;
   -ms-transform-origin: bottom left;
