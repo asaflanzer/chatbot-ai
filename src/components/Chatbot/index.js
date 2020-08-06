@@ -14,10 +14,7 @@ import { create, all } from 'mathjs';
 // styles
 import * as S from './styles';
 
-import ScrollToBottom, {
-  useScrollToBottom,
-  useSticky,
-} from 'react-scroll-to-bottom';
+import ScrollToBottom, { useScrollToBottom } from 'react-scroll-to-bottom';
 
 const math = create(all);
 const cookies = new Cookies();
@@ -42,7 +39,7 @@ const Chatbot = () => {
 
   useEffect(() => {
     scrollToBottom(messagesEndRef);
-  }, [messages, input, agentTyping]);
+  }, [messages, input, agentTyping, scrollToBottom]);
 
   const handleFirstResponse = async () => {
     if (cookies.get('user') !== undefined) {

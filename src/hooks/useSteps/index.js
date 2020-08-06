@@ -79,6 +79,7 @@ const useSteps = () => {
         setCurrent(current + 1);
       }
     })();
+    // eslint-disable-next-line
   }, [current]);
 
   return {
