@@ -167,7 +167,7 @@ const Chatbot = () => {
 
   const openChat = () => {
     setOpen(true);
-    handleFirstResponse();
+    if (!messages.length) handleFirstResponse();
   };
   return (
     <>
@@ -190,7 +190,6 @@ const Chatbot = () => {
           <S.Scrollbar>
             <ScrollToBottom>
               <S.MessageList length={messages.length}>
-                {console.log(messages)};
                 {messages && (
                   <ChatMessage messages={messages} data-testid='chat-message' />
                 )}
