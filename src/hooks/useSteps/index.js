@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 // delay
 import delay from 'delay';
 // Cookies
@@ -37,50 +37,49 @@ const useSteps = () => {
     },
   ];
 
-  const updateMessages = async () => {
-    //console.log('current: ', current);
-    if (current === 3 && username !== '') {
-      cookies.set('user', username, { path: '/' });
-      await delay(1500);
-      setAgentTyping(true);
-      await delay(2000);
-      setAgentTyping(false);
-      setMessages((messages) => [...messages, steps[current]]);
-      setCurrent(current + 1);
-    }
-    if (current === 4) {
-      await delay(1500);
-      setAgentTyping(true);
-      await delay(3000);
-      setAgentTyping(false);
-      setMessages((messages) => [...messages, steps[current]]);
-      setCurrent(current + 1);
-    }
-    if (current === 6) {
-      await delay(1500);
-      setAgentTyping(true);
-      await delay(3000);
-      setAgentTyping(false);
-      // setMessages((messages) => [
-      //   ...messages,
-      //   { agent: math.evaluate(mathExpression) },
-      // ]);
-      setMessages((messages) => [...messages, steps[current]]);
-      setCurrent(current + 1);
-    }
-    if (current === 7) {
-      await delay(1500);
-      setAgentTyping(true);
-      await delay(3000);
-      setAgentTyping(false);
-      setMessages((messages) => [...messages, steps[current]]);
-      setCurrent(current + 1);
-    }
-  };
+  useEffect(() => {
+    (async () => {
+      console.log('current: ', current);
 
-  // useEffect(() => {
-  //   updateMessages();
-  // }, [current, username]);
+      if (current === 3 && username !== '') {
+        cookies.set('user', username, { path: '/' });
+        await delay(1500);
+        setAgentTyping(true);
+        await delay(2000);
+        setAgentTyping(false);
+        setMessages((messages) => [...messages, steps[current]]);
+        setCurrent(current + 1);
+      }
+      if (current === 4) {
+        await delay(1500);
+        setAgentTyping(true);
+        await delay(3000);
+        setAgentTyping(false);
+        setMessages((messages) => [...messages, steps[current]]);
+        setCurrent(current + 1);
+      }
+      if (current === 6) {
+        await delay(1500);
+        setAgentTyping(true);
+        await delay(3000);
+        setAgentTyping(false);
+        // setMessages((messages) => [
+        //   ...messages,
+        //   { agent: math.evaluate(mathExpression) },
+        // ]);
+        setMessages((messages) => [...messages, steps[current]]);
+        setCurrent(current + 1);
+      }
+      if (current === 7) {
+        await delay(1500);
+        setAgentTyping(true);
+        await delay(3000);
+        setAgentTyping(false);
+        setMessages((messages) => [...messages, steps[current]]);
+        setCurrent(current + 1);
+      }
+    })();
+  }, [current]);
 
   return {
     steps,
@@ -94,7 +93,6 @@ const useSteps = () => {
     setUserName,
     mathExpression,
     setMathExpression,
-    updateMessages,
   };
 };
 

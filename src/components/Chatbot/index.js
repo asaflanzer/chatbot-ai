@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 // components
 import Launcher from '../Launcher';
 import ChatMessage from '../ChatMessage';
@@ -13,6 +13,11 @@ import delay from 'delay';
 import { create, all } from 'mathjs';
 // styles
 import * as S from './styles';
+
+import ScrollToBottom, {
+  useScrollToBottom,
+  useSticky,
+} from 'react-scroll-to-bottom';
 
 const math = create(all);
 const cookies = new Cookies();
@@ -30,12 +35,14 @@ const Chatbot = () => {
     setAgentTyping,
     setUserName,
     setMathExpression,
-    updateMessages,
   } = useSteps();
 
+  const messagesEndRef = useRef(null);
+  const scrollToBottom = useScrollToBottom();
+
   useEffect(() => {
-    updateMessages();
-  }, [updateMessages]);
+    scrollToBottom(messagesEndRef);
+  }, [messages, input, agentTyping]);
 
   const handleFirstResponse = async () => {
     if (cookies.get('user') !== undefined) {
@@ -140,14 +147,19 @@ const Chatbot = () => {
               <path d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z' />
             </S.SvgClose>
           </S.ChatHeader>
+
           <S.Scrollbar>
-            <S.MessageList length={messages.length}>
-              {messages && <ChatMessage messages={messages} />}
-              {(agentTyping || input !== '') && (
-                <ChatTyping agent={agentTyping} user={input} />
-              )}
-            </S.MessageList>
+            <ScrollToBottom>
+              <S.MessageList length={messages.length}>
+                {messages && <ChatMessage messages={messages} />}
+                {(agentTyping || input !== '') && (
+                  <ChatTyping agent={agentTyping} user={input} />
+                )}
+              </S.MessageList>
+              <div ref={messagesEndRef} />
+            </ScrollToBottom>
           </S.Scrollbar>
+
           <form onSubmit={handleUserMessage}>
             <S.ChatFooter>
               <S.Input value={input} onChange={handleInput} />

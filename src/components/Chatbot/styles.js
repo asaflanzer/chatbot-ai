@@ -79,15 +79,30 @@ export const MessageList = styled.div`
   -webkit-justify-content: flex-end;
   flex-direction: column;
   height: 100%;
+  width: 300px;
   margin-top: ${(props) =>
     (props.length <= 4
       ? -(props.length * 25) + 'px'
       : props.length <= 7
       ? -(props.length * 12) + 'px'
       : props.length * 18 + 'px') || '0px'};
-  padding-top: ${(props) => props.length * 25 + 'px' || 40};
+  padding-top: ${(props) =>
+    (props.length <= 4
+      ? props.length * 25 + 'px'
+      : props.length <= 7
+      ? props.length * 12 + 'px'
+      : props.length * 18 + 'px') || '40px'};
   background-color: #fff;
 `;
+
+//padding-top: ${(props) => props.length * 25 + 'px' || 40};
+
+// margin-top: ${(props) =>
+//   (props.length <= 4
+//     ? -(props.length * 25) + 'px'
+//     : props.length <= 7
+//     ? -(props.length * 12) + 'px'
+//     : props.length * 18 + 'px') || '0px'};
 
 export const MessageItem = styled.div`
   margin: 5px;
