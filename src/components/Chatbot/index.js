@@ -30,7 +30,7 @@ const Chatbot = () => {
 
   const scrollToBottom = useScrollToBottom();
 
-  let nextMessage;
+  let nextMessage = {};
 
   useEffect(
     (nextMessage) => {
@@ -89,7 +89,6 @@ const Chatbot = () => {
   const handleBotResponse = (userMsg) => {
     // bot response
     const lastStep = _.findLast(messages, (step) => {
-      console.log('last step before BOT', step);
       return step;
     });
 
@@ -150,10 +149,10 @@ const Chatbot = () => {
 
   const setDelayedMessage = async ({ message, delayBot = true }) => {
     try {
-      const res = await message.type;
-      if (res === 'USER') {
+      const res = await message;
+      if (res.type === 'USER') {
         setMessages((messages) => [...messages, message]);
-      } else if (await delayBot) {
+      } else if (delayBot) {
         await delay(2000);
         setBotTyping(true);
         await delay(2000);
