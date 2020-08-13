@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import MayaIcon from '../../assets/mayas_avatar.png';
+import AgentIcon from '../../assets/cowboy.png';
 import UserIcon from '../../assets/user_avatar.png';
 
 export const MessageItem = styled.div`
@@ -44,7 +44,12 @@ export const Avatar = styled.img`
   height: 40px;
   margin-right: 2px;
   border-radius: 50%;
-  background-image: url(${MayaIcon});
+  border: none !important;
+  border-color: none !important;
+  border-style: none;
+  outline: none;
+  border-image-width: 0 !important;
+  background-image: url(${AgentIcon});
   background-repeat: no-repeat;
   background-size: contain;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;

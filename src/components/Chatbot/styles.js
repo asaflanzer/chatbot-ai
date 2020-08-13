@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import Icon from '../Icon';
 import SubmitIcon from '../../assets/submit_icon.png';
-import MayaIcon from '../../assets/mayas_avatar.png';
+import AgentIcon from '../../assets/cowboy.png';
 import UserIcon from '../../assets/user_avatar.png';
 
 export default styled.svg.attrs({
@@ -29,6 +29,11 @@ export const Chat = styled.div`
   box-shadow: 0 12px 24px 0 rgba(0, 0, 0, 0.15);
   transform-origin: bottom right;
   transition: transform 0.3s ease;
+  @media (max-width: 768px) {
+    width: 100%;
+    bottom: 0;
+    right: 0;
+  }
 `;
 
 export const ChatHeader = styled.div`
@@ -67,6 +72,9 @@ export const Scrollbar = styled.div`
   overflow-x: hidden;
   overflow-y: auto;
   position: relative;
+  @media (max-width: 768px) {
+    height: 100vh;
+  }
 `;
 
 export const MessageList = styled.div`
@@ -146,7 +154,7 @@ export const Avatar = styled.img`
   height: 40px;
   margin-right: 2px;
   border-radius: 50%;
-  background-image: url(${MayaIcon});
+  background-image: url(${AgentIcon});
   background-repeat: no-repeat;
   background-size: contain;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;

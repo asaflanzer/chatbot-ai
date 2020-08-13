@@ -13,7 +13,8 @@ import { create, all } from 'mathjs';
 import _ from 'lodash';
 // styles
 import * as S from './styles';
-
+// import { Transition } from 'react-transition-group';
+// Chatbot steps
 import stepsConst from './steps';
 
 import ScrollToBottom, { useScrollToBottom } from 'react-scroll-to-bottom';
@@ -112,33 +113,65 @@ const Chatbot = () => {
         true
       );
     } else if (responseType === 'MATH_CALC_1') {
-      setDelayedMessage(
-        {
-          ...nextMessage,
-          message: {
-            type: 'BOT',
-            action: responseType,
-            text: () => `${math.evaluate(userMsg)}`,
-            responseType: 'MATH_RESPONSE_1',
-            waitForUserInput: false,
+      if (!userMsg.match(/[A-Za-z+#.]/)) {
+        setDelayedMessage(
+          {
+            ...nextMessage,
+            message: {
+              type: 'BOT',
+              action: responseType,
+              text: () => `${math.evaluate(userMsg)}`,
+              responseType: 'MATH_RESPONSE_1',
+              waitForUserInput: false,
+            },
           },
-        },
-        true
-      );
+          true
+        );
+      } else {
+        setDelayedMessage(
+          {
+            ...nextMessage,
+            message: {
+              type: 'BOT',
+              action: 'NOT VALID',
+              text: () => 'Ohhh oh, looks like a bad input!',
+              responseType: 'MATH_CALC_1',
+              waitForUserInput: true,
+            },
+          },
+          true
+        );
+      }
     } else if (responseType === 'MATH_CALC_2') {
-      setDelayedMessage(
-        {
-          ...nextMessage,
-          message: {
-            type: 'BOT',
-            action: responseType,
-            text: () => `${math.evaluate(userMsg)}`,
-            responseType: 'RANDOM_RESPONSE',
-            waitForUserInput: false,
+      if (!userMsg.match(/[A-Za-z+#.]/)) {
+        setDelayedMessage(
+          {
+            ...nextMessage,
+            message: {
+              type: 'BOT',
+              action: responseType,
+              text: () => `${math.evaluate(userMsg)}`,
+              responseType: 'RANDOM_RESPONSE',
+              waitForUserInput: false,
+            },
           },
-        },
-        true
-      );
+          true
+        );
+      } else {
+        setDelayedMessage(
+          {
+            ...nextMessage,
+            message: {
+              type: 'BOT',
+              action: 'NOT VALID',
+              text: () => 'Ohhh oh, looks like a bad input!',
+              responseType: 'MATH_CALC_2',
+              waitForUserInput: true,
+            },
+          },
+          true
+        );
+      }
     } else {
       setDelayedMessage(
         { ...nextMessage, message: stepsConst[responseType] },
@@ -160,7 +193,7 @@ const Chatbot = () => {
         setMessages((messages) => [...messages, message]);
       }
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   };
 
@@ -200,8 +233,15 @@ const Chatbot = () => {
 
           <form onSubmit={handleUserMessage}>
             <S.ChatFooter>
-              <S.Input value={input} onChange={handleInput} />
-              <S.Submit onClick={handleUserMessage} />
+              <S.Input
+                value={input}
+                onChange={handleInput}
+                data-testid='input-message'
+              />
+              <S.Submit
+                onClick={handleUserMessage}
+                data-testid='submit-message'
+              />
             </S.ChatFooter>
           </form>
         </S.Chat>

@@ -1,5 +1,5 @@
 import styled, { keyframes } from 'styled-components';
-import MayaIcon from '../../assets/mayas_avatar.png';
+import AgentIcon from '../../assets/cowboy.png';
 
 export const MessageItem = styled.div`
   margin: 5px;
@@ -29,7 +29,10 @@ export const Avatar = styled.img`
   height: 40px;
   margin-right: 2px;
   border-radius: 50%;
-  background-image: url(${MayaIcon});
+  border: none;
+  border-style: none;
+  outline: none;
+  background-image: url(${AgentIcon});
   background-repeat: no-repeat;
   background-size: contain;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;

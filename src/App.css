@@ -15,14 +15,31 @@
 
 .app-title {
   padding: 0 10px;
+
+}
+
+@media (max-width: 768px) {
+  .app-title {
+    font-size: 26px;
+  }
+}
+
+.app-logo {
+  margin-top: 20px;
+  width: 90px;
+  height: 90px;
+  margin-right: 2px;
+  border-radius: 50%;
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 .typewriter-text {
   overflow: hidden;
   position: relative;
   margin: 0 auto;
-  width: 320px;
+  width: 260px;
   border-right: 2px solid rgba(0,0,0,.75);
-  font-size: 16px;
+  font-size: 14px;
   white-space: nowrap;
   animation: typewriter 4s steps(44) 1s 1 normal both, 
   blinkTextCursor 400ms steps(44) 5.5s 1 normal both;
@@ -33,7 +50,7 @@
     width: 0;
   }
   to { 
-    width: 322px;
+    width: 262px;
   }
 }
 
