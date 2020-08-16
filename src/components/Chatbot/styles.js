@@ -55,6 +55,13 @@ export const ChatHeader = styled.div`
   background: #ff0083;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
+  @media (max-width: 768px) {
+    padding-bottom: 0;
+    position: fixed;
+    top: -7px;
+    width: 94%;
+    z-index: 1000;
+  }
 `;
 
 export const SvgClose = styled(Icon)`

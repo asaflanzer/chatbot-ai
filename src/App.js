@@ -33,7 +33,7 @@ function App() {
       <br />
       <img src={mayaAvatar} alt='Maya AI' className='app-logo' />
       <h1 className='app-title'>Forget everything you know about Chatbots</h1>
-      <p className='typewriter-text'>Howdy! Y'all need any math expert?</p>
+      <p className='typewriter-text'>Howdy! Y'all in need of a math expert?</p>
 
       <Transition in={inProp} timeout={500}>
         {(state) => (

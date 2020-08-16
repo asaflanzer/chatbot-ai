@@ -12,9 +12,9 @@ const stepsConst = {
     type: 'BOT',
     action: 'GREET_BACK_1',
     text: () =>
-      `Nice to see you again ${cookies.get(
+      `Welcome back ${cookies.get(
         'user'
-      )}. Let's pick this up from where we left off`,
+      )}. Let's giddy up from where we left off`,
     responseType: 'GREET_BACK_2',
     waitForUserInput: false,
   },
@@ -22,7 +22,7 @@ const stepsConst = {
     type: 'BOT',
     action: 'GREET_BACK_2',
     text: () =>
-      "List any mathematical expression you can think of - I'll crunch it in no time",
+      "Give me any math expression you can think of - I'll crunch it in no time",
     responseType: 'MATH_CALC_1',
     waitForUserInput: true,
   },
@@ -30,21 +30,22 @@ const stepsConst = {
   GREETING_1: {
     type: 'BOT',
     action: 'GREETING_1',
-    text: () => "Hi, I'm Maya! Today you're going to help me to ace my game",
+    text: () =>
+      "Hey, I'm Diego! Today I'm gonna take care of your problems one by one.",
     responseType: 'GREETING_2',
     waitForUserInput: false,
   },
   GREETING_2: {
     type: 'BOT',
     action: 'GREETING_2',
-    text: () => "Let's start by telling me your name",
+    text: () => "Let's begin by telling me your name",
     responseType: 'NAME_RESPONSE',
     waitForUserInput: true,
   },
   NAME_RESPONSE: {
     type: 'BOT',
     action: 'NAME_RESPONSE',
-    text: () => 'Nice to meet you USERNAME!',
+    text: () => 'Pleased to meet ya USERNAME!',
     responseType: 'GREETING_3',
     waitForUserInput: false,
   },
@@ -52,7 +53,7 @@ const stepsConst = {
     type: 'BOT',
     action: 'GREETING_3',
     text: () =>
-      "Alright, this is how it going to work. List any mathematical expression you can think of - I'll crunch it in no time",
+      "Alright, this is how it going to work. Give me any math expression you can think of - I'll crunch it in no time",
     responseType: 'MATH_CALC_1',
     waitForUserInput: true,
   },
