@@ -1,7 +1,7 @@
 # A React Chatbot
 Built with `React Hooks` and `styled-components` , The chatbot will solve any mathematical expression
 
-[Demo](https://maya-ai.netlify.app/)
+[Demo](https://howdy-ai.netlify.app/)
 
 ## Project Structure
 * Created with [create-react-app](https://reactjs.org/docs/create-a-new-react-app.html)
